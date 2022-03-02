@@ -1,60 +1,12 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 
-from distribution_comparison import __version__
-
-extra_math = [
-    'returns-decorator',
-]
-
-extra_bin = [
-    *extra_math,
-]
-
-extra_test = [
-    *extra_math,
-    'pytest>=4',
-    'pytest-cov>=2',
-]
-extra_dev = [
-    *extra_test,
-]
-
-extra_ci = [
-    *extra_test,
-    'python-coveralls',
-]
+from my_pip_package import __version__
 
 setup(
-    name='distribution_comparison',
+    name='comparing_distributions',
     version=__version__,
-    description='A package to help comparing distributions',
     url='https://gh.internal.shutterfly.com/or-koren/distribution-comparison',
     author='OR KOREN',
     author_email='or.koren@shutterfly.com',
-
-    packages=find_packages(),
-
-    extras_require={
-        'math': extra_math,
-
-        'bin': extra_bin,
-
-        'test': extra_test,
-        'dev': extra_dev,
-
-        'ci': extra_ci,
-    },
-
-    entry_points={
-        'console_scripts': [
-            'add=my_pip_package.math:cmd_add',
-        ],
-    },
-
-    classifiers=[
-        'Intended Audience :: Developers',
-
-        'Programming Language :: Python',
-        'Programming Language :: Python :: 3',
-    ],
+    py_modules=['comparing_distributions'],
 )

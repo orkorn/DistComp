@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 from termcolor import colored
 from matplotlib.pyplot import figure
   
+__version__ = 'dev'
 
 class comparing_disterbutions():
      

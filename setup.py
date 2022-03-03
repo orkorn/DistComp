@@ -1,6 +1,6 @@
 from setuptools import setup
 
-from my_pip_package import __version__
+from comparing_distributions import __version__
 
 setup(
     name='comparing_distributions',

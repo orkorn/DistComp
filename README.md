@@ -12,6 +12,7 @@ Author:  OR KOREN <or.koren@shutterfly.com>
 
 ### Quick Start
 
+##### creating a dummy df for 
 ```python
 # dummy df function for demonstration 
 def DummyDF(n=1):
@@ -27,21 +28,22 @@ def DummyDF(n=1):
     l=['test' for i in range(int(0.8*n))]+['ctrl' for i in range(int(0.2*n))]
     df['gb_col'] = l
     return df
+df=DummyDF(n=10000)
 ```    
 ---
 
 ```python
+# actual usage once you have a dataframe with features and an optional treatment column (e.g. test/control column)
 from distcomp import comparing_disterbutions
 
 
-df=DummyDF(n=10000)
 cd=comparing_disterbutions(df,
                            features=['a','b'],
                            treatment='gb_col',
                            sample_frac=0.9,
                            remove_outliers_quintiles=[0.01,0.99])
                            
-# possible functions to use 
+# functions from the module 
 cd.PlotECDF()     
 cd.PlotHist(histnorm='percent',bins=None)
 cd.KS_Test(pval=0.1,ks_alternative='two-sided',ks_mode='auto')

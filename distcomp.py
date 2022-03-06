@@ -215,9 +215,6 @@ class comparing_disterbutions():
                 print(colored(f''''{a}' & '{b}' come from different disterbutions, since ttest P-Value is smaller then {pval}  ''','red'))
             if ttest_pval>pval:
                 print(colored(f''''{a}' & '{b}' come from same disterbutions, since ttest P-Value is higher then {pval}  ''','green'))   
-    
-            print(sample1.mean(),sample1.std())
-            print(sample2.mean(),sample2.std())    
             
             
     def create_table_one(self,test_group_name='test'):

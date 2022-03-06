@@ -18,7 +18,7 @@ def DummyDF(n=1):
     import pandas as pd 
     import numpy as pd
     df = pd.DataFrame(index=range(n))
-    # create normal dist with mean 10 and SD 2 
+    # create normal dist columns with different mean and SD
     df['a'] = np.random.normal(loc=0,scale=1,size=df.shape[0])
     df['b'] = np.random.normal(loc=0.5,scale=1.2,size=df.shape[0])
     df['c'] = np.random.normal(loc=0.0,scale=1.1,size=df.shape[0])
@@ -26,6 +26,7 @@ def DummyDF(n=1):
 
     l=['test' for i in range(int(0.8*n))]+['ctrl' for i in range(int(0.2*n))]
     df['gb_col'] = l
+    
     return df
 df=DummyDF(n=10000)
 ```    

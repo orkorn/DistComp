@@ -9,7 +9,7 @@ setup(
     url='https://gh.internal.shutterfly.com/or-koren/comparing_distributions',
     author='OR KOREN',
     author_email='or.koren@shutterfly.com',
-    py_modules=['comparing_distributions'],
+    py_modules=['DistComp'],
     python_requires='>=3.6',
     install_requires=[
         'pandas',

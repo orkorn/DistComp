@@ -1,8 +1,8 @@
-# distribution-comparison
----
 # TUTORIAL: How to use DistComp
 
 Author:  OR KOREN <or.koren@shutterfly.com>
+
+---
 
 ## Installation
 

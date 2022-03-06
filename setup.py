@@ -18,7 +18,8 @@ setup(
         'scipy',
         'seaborn',
         'matplotlib',
-        'termcolor']
+        'termcolor',
+        'causalml']
 
     )
 

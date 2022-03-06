@@ -11,3 +11,7 @@ __pycache__/
 # Pip
 *.egg-info
 dist/
+
+
+# figures
+iframe_figures/

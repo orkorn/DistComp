@@ -12,9 +12,8 @@ Author:  OR KOREN <or.koren@shutterfly.com>
 
 ### Quick Start
 
-##### creating a dummy df for 
+###### creating a dummy df for the example
 ```python
-# dummy df function for demonstration 
 def DummyDF(n=1):
     import pandas as pd 
     import numpy as pd
@@ -31,9 +30,9 @@ def DummyDF(n=1):
 df=DummyDF(n=10000)
 ```    
 ---
+###### actual usage once you have a dataframe with features and an optional treatment column (e.g. test/control column)
 
 ```python
-# actual usage once you have a dataframe with features and an optional treatment column (e.g. test/control column)
 from distcomp import comparing_disterbutions
 
 

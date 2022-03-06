@@ -10,3 +10,11 @@ setup(
     author_email='or.koren@shutterfly.com',
     py_modules=['comparing_distributions'],
 )
+
+
+# install_requires=[
+#     'pandas','numpy','plotly','scipy','seaborn','matplotlib','termcolor',''
+# ],
+
+ 
+  

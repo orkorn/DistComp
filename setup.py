@@ -5,7 +5,7 @@ from comparing_distributions import __version__
 setup(
     name='distcomp',
     version='0.1.0',
-    description=("a tool for comparing disterbutions"),
+    description=("a tool for comparing distributions"),
     url='https://gh.internal.shutterfly.com/or-koren/distcomp',
     author='OR KOREN',
     author_email='or.koren@shutterfly.com',

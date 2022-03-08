@@ -36,6 +36,7 @@ df=DummyDF(n=50000)
 ```python
 from distcomp import comparing_distributions
 
+# instantiating
 cd=comparing_distributions(df,
                            features=['feature_A','feature_B','Feature_C'],
                            treatment='treatment',
@@ -43,12 +44,12 @@ cd=comparing_distributions(df,
                            remove_outliers_quintiles=[0.01,0.99])
                            
 
-# functions from the module 
+# methods:
+
+cd.PlotECDF(figsize=(10,4))
 
 # histnorm accept percent/probability/density/probability density/None
 cd.PlotHist(histnorm='probability density',bins=None)
-
-cd.PlotECDF(figsize=(10,4))
 
 cd.KS_Test(pval=0.1,ks_alternative='two-sided',ks_mode='auto')
 

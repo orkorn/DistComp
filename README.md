@@ -17,13 +17,13 @@ Author:  OR KOREN <orkorn@gmail.com>
 def DummyDF(n=1):
     
     df = pd.DataFrame(index=range(n))
-    # create normal dist with mean 10 and SD 2 
+    # create normal dist features
     df['feature_A'] = np.random.normal(loc=0,scale=1,size=df.shape[0])
     df['feature_B'] = np.random.normal(loc=0.5,scale=1.2,size=df.shape[0],)
 
     l=['test' for i in range(int(0.8*n))]+['ctrl' for i in range(int(0.2*n))]
     df['treatment'] = l
-    
+    # create feature with test and control from different distribution
     df['Feature_C'] = pd.concat([df[df.treatment=='test']['feature_A'],df[df.treatment=='ctrl']['feature_B']])
 
     return df

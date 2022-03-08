@@ -1,26 +1,25 @@
 import pandas as pd
 import numpy as np
 import plotly.express as px
-from scipy import stats
 import seaborn as sns
 import matplotlib.pyplot as plt
+from scipy import stats
 from termcolor import colored
-from matplotlib.pyplot import figure
   
 __version__ = '1.0.0'
 
-class comparing_disterbutions():
+class comparing_distributions():
      
     """
     Parameters
     ----------
     dataframe : input pandas.dataframe with columns and an optional 'treatment' column
-    features : list of strings of column names from the dataframe of the features/measures for distrebution comparison
+    features : list of strings of column names from the dataframe of the features/measures for distribution comparison
     treatment : string , name of column from dataframe, that is the split value for comparison (e.g. test&control)
-    sample_frac : flaot between 0 and 1 to indicate the precentage to randomly keep from the dataframe.
+    sample_frac : flaot between 0 and 1 to indicate the percentage to randomly keep from the dataframe.
                 use this in case of very large dataframe.
     remove_outliers_quintiles : list of range to keep values at. for example [0.05,0.90] will keep 
-                the values within 5% to 90% of the population disterbution
+                the values within 5% to 90% of the population distribution
     """ 
 
     
@@ -70,44 +69,76 @@ class comparing_disterbutions():
                 tmp_df[col] = tmp_df[col][tmp_df[col].between(tmp_df[col].quantile(lower_bound),
                                                               tmp_df[col].quantile(upper_bound))]   
             range_=upper_bound-lower_bound
-            print(f'''keeping values within {lower_bound}% - {upper_bound}% of disterbution . n={round(range_*len(tmp_df),1)}''')
+            print(f'''keeping values within {lower_bound}% - {upper_bound}% of distribution . n={round(range_*len(tmp_df),1)}''')
 
         return tmp_df
         
         
-    def PlotECDF(self):
+    def PlotECDF(self,figsize=(10,4),**kwargs):
 
+        '''
+        Plot ECDF using plotly frameware
+        
+        
+        Parameters
+        ----------
+        figsize : tuple of 2 int representing size of fig. default = (10,4)
+        '''
+        
         tmp_df=self.PrepareDF()
         if (len(self.features)==1) & (self.treatment_check):
-            plt.figure(figsize=(10,4))
-            sns.ecdfplot(tmp_df,x=self.features[0],hue=self.treatment)
+            plt.figure(figsize=figsize)
+            sns.ecdfplot(tmp_df,x=self.features[0],hue=self.treatment,**kwargs)
             plt.show()
         elif (len(self.features)>1) & (self.treatment_check):
             for col in self.features:
-                plt.figure(figsize=(10,4))
-                sns.ecdfplot(tmp_df,x=col,hue=self.treatment )
+                plt.figure(figsize=figsize)
+                sns.ecdfplot(tmp_df,x=col,hue=self.treatment,**kwargs )
                 plt.show()
         elif (len(self.features)>=1) & (self.treatment_check==False):  
-            plt.figure(figsize=(10,4))
-            sns.ecdfplot(tmp_df[[*self.features]])
+            plt.figure(figsize=figsize)
+            sns.ecdfplot(tmp_df[[*self.features]],**kwargs)
             plt.show()
 
             
-    def PlotHist(self,bins=None,histnorm=None):
+    def PlotHist(self,bins=None,histnorm='percent',figsize=(8,4),**kwargs):
 
+        '''
+        Plot Historgam (normelized in default) using seaborn frameware
+        
+        
+        Parameters
+        ----------
+        figsize : tuple of 2 int representing size of fig. default = (10,4)
+        bins : Positive integer. Sets the number of bins.
+        histnorm : str (default `percent`)
+            One of `'percent'`, `'probability'`, `'density'`, or `'probability
+            density'` If `None`, the output of `histfunc` is used as is. If
+            `'probability'`, the output of `histfunc` for a given bin is divided by
+            the sum of the output of `histfunc` for all bins. If `'percent'`, the
+            output of `histfunc` for a given bin is divided by the sum of the
+            output of `histfunc` for all bins and multiplied by 100. If
+            `'density'`, the output of `histfunc` for a given bin is divided by the
+            size of the bin. If `'probability density'`, the output of `histfunc`
+            for a given bin is normalized such that it corresponds to the
+            probability that a random event whose distribution is described by the
+            output of `histfunc` will fall into that bin.
+        '''
+        
+        
         tmp_df=self.PrepareDF()       
         if (len(self.features)==1) & (self.treatment_check):
-            fig = px.histogram(tmp_df, x=self.features[0], color=self.treatment,nbins=bins,histnorm=histnorm)
-            fig.update_layout(width=800,height=400,)
+            fig = px.histogram(tmp_df, x=self.features[0], color=self.treatment,nbins=bins,histnorm=histnorm,**kwargs)
+            fig.update_layout(width=figsize[0]*100,height=figsize[1]*100,)
             fig.show()
         elif (len(self.features)>1) & (self.treatment_check):
             for col in self.features:
-                fig = px.histogram(tmp_df, x=col,color=self.treatment,nbins=bins,opacity=0.75,histnorm=histnorm) 
-                fig.update_layout(width=800,height=400,barmode='overlay')
+                fig = px.histogram(tmp_df, x=col,color=self.treatment,nbins=bins,opacity=0.75,histnorm=histnorm,**kwargs) 
+                fig.update_layout(width=figsize[0]*100,height=figsize[1]*100,barmode='overlay')
                 fig.show()
         elif (len(self.features)>=1) & (self.treatment_check==False):  
-            fig = px.histogram(tmp_df, x=[*self.features],nbins=bins,opacity=0.75,histnorm=histnorm) 
-            fig.update_layout(width=800,height=400,barmode='overlay')
+            fig = px.histogram(tmp_df, x=[*self.features],nbins=bins,opacity=0.75,histnorm=histnorm,**kwargs) 
+            fig.update_layout(width=figsize[0]*100,height=figsize[1]*100,barmode='overlay')
             fig.show()    
                 
 
@@ -118,14 +149,18 @@ class comparing_disterbutions():
         ks_alternative: input pandas.DataFrame containing at least 1 column for ECDF plot
         ks_mode: string , name of column from dataframe, that is the split value for the ECDF
         pval: list of range to keep values at. for example [0.05,0.90] will keep 
-        the values within 5% to 90% of the population disterbution
+        the values within 5% to 90% of the population distribution
 
         see KS documentation if needed:
         https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.ks_2samp.html
         """
     
         tmp_df=self.PrepareDF()
-        
+        if self.treatment==None:
+            pass
+        else:
+            assert len(tmp_df[self.treatment].unique())==2 , f'treatment must contain 2 values only for ks_test, recived {len(tmp_df[self.treatment].unique())} ' 
+
         if (len(self.features)==1) & (self.treatment_check):
             a,b = tmp_df[self.treatment].unique()
             d1=tmp_df[self.features[0]][tmp_df[self.treatment]==a]
@@ -136,9 +171,9 @@ class comparing_disterbutions():
             ks_pval=stats.ks_2samp(d1, d2, alternative=ks_alternative, mode=ks_mode)[1]
             
             if ks_pval<=pval:
-                print(colored(f''''{a}' & '{b}' come from different disterbutions, since KS P-Value is smaller then {pval}  ''','red'))
+                print(colored(f''''{a}' & '{b}' come from different distributions, since KS P-Value is smaller then {pval}  ''','red'))
             if ks_pval>pval:
-                print(colored(f''''{a}' & '{b}' come from same disterbutions, since KS P-Value is higher then {pval}  ''','green'))
+                print(colored(f''''{a}' & '{b}' come from same distributions, since KS P-Value is higher then {pval}  ''','green'))
                 
         elif (len(self.features)>1) & (self.treatment_check):
 
@@ -152,13 +187,13 @@ class comparing_disterbutions():
                 ks_pval=stats.ks_2samp(d1, d2, alternative=ks_alternative, mode=ks_mode)[1]
                 
                 if ks_pval<=pval:
-                    print(colored(f''''{a}' & '{b}' come from different disterbutions, since KS P-Value is smaller then {pval}  ''','red'))
+                    print(colored(f''''{a}' & '{b}' come from different distributions, since KS P-Value is smaller then {pval}  ''','red'))
                 if ks_pval>pval:
-                    print(colored(f''''{a}' & '{b}' come from same disterbutions, since KS P-Value is higher then {pval}  ''','green'))
+                    print(colored(f''''{a}' & '{b}' come from same distributions, since KS P-Value is higher then {pval}  ''','green'))
 
         elif (len(self.features)>=1) & (self.treatment_check==False): 
             
-            assert len(self.features)==2,f"""KS test can be applied to 2 disterbutions. got {len(self.features)} """
+            assert len(self.features)==2,f"""KS test can be applied to 2 distributions. got {len(self.features)} """
 
             a,b = self.features
             d1=tmp_df[self.features[0]]
@@ -169,16 +204,20 @@ class comparing_disterbutions():
             ks_pval=stats.ks_2samp(d1, d2, alternative=ks_alternative, mode=ks_mode)[1]
 
             if ks_pval<=pval:
-                print(colored(f''''{a}' & '{b}' come from different disterbutions, since KS P-Value is smaller then {pval}  ''','red'))
+                print(colored(f''''{a}' & '{b}' come from different distributions, since KS P-Value is smaller then {pval}  ''','red'))
             if ks_pval>pval:
-                print(colored(f''''{a}' & '{b}' come from same disterbutions, since KS P-Value is higher then {pval}  ''','green'))   
+                print(colored(f''''{a}' & '{b}' come from same distributions, since KS P-Value is higher then {pval}  ''','green'))   
     
 
     def ttest(self,test_group_name='test',pval=0.05):
-        
-        tmp_df=self.PrepareDF()       
-#         assert tmp_df[self.treatment].unique()==2 , f'treatment must contain 2 values only for ttest, recived {len(tmp_df[self.treatment].unique())} ' 
-        
+
+        tmp_df=self.PrepareDF() 
+        if self.treatment==None:
+            assert (False), 'ttest must recive a treatment column'
+        else:
+            assert len(tmp_df[self.treatment].unique())==2 , f'treatment must contain 2 values only for ttest, recived {len(tmp_df[self.treatment].unique())} ' 
+            
+    
         if (len(self.features)>=1) & (self.treatment_check):
             a,b = tmp_df[self.treatment].unique()
             for col in self.features:
@@ -192,12 +231,9 @@ class comparing_disterbutions():
                 ttest_pval=stats.ttest_ind(sample1, sample2,equal_var=False)[1]
 
                 if ttest_pval<=pval:
-                    print(colored(f''''{a}' & '{b}' come from different disterbutions, since ttest P-Value is smaller then {pval}  ''','red'))
+                    print(colored(f''''{a}' & '{b}' have different means, since ttest P-Value is smaller then {pval}  ''','red'))
                 if ttest_pval>pval:
-                    print(colored(f''''{a}' & '{b}' come from same disterbutions, since ttest P-Value is higher then {pval}  ''','green'))   
-
-                print(sample1.mean(),sample1.std())
-                print(sample2.mean(),sample2.std())
+                    print(colored(f''''{a}' & '{b}' have from same mean, since ttest P-Value is higher then {pval}  ''','green'))   
 
         elif (len(self.features)>=1) & (self.treatment_check==False): 
 
@@ -212,9 +248,9 @@ class comparing_disterbutions():
             ttest_pval=stats.ttest_ind(sample1, sample2,equal_var=False)[1]
 
             if ttest_pval<=pval:
-                print(colored(f''''{a}' & '{b}' come from different disterbutions, since ttest P-Value is smaller then {pval}  ''','red'))
+                print(colored(f''''{a}' & '{b}' have different means, since ttest P-Value is smaller then {pval}  ''','red'))
             if ttest_pval>pval:
-                print(colored(f''''{a}' & '{b}' come from same disterbutions, since ttest P-Value is higher then {pval}  ''','green'))   
+                print(colored(f''''{a}' & '{b}'have same means, since ttest P-Value is higher then {pval}  ''','green'))   
             
             
     def create_table_one(self,test_group_name='test'):
@@ -239,6 +275,7 @@ class comparing_disterbutions():
         SMD = Standardized mean difference
         '''
         
+        assert type(self.treatment)==str, f'treatment column must be provided to comparing_distributions()'
         
         from causalml.match import create_table_one
        
@@ -248,4 +285,5 @@ class comparing_disterbutions():
         return create_table_one(data=tmp_df,
                          treatment_col='treatment_col',
                          features=self.features)
+
 

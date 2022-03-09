@@ -1,23 +1,24 @@
-from setuptools import setup
+import setuptools
 
-setup(
+with open("README.md", "r", encoding="utf-8") as fh:
+    long_description = fh.read()
+
+setuptools.setup(
     name='distcomp',
     version='0.1.0',
-    description=("a tool for comparing distributions"),
-    url='https://gh.internal.shutterfly.com/or-koren/distcomp',
-    author='OR KOREN',
-    author_email='or.koren@shutterfly.com',
-    py_modules=['distcomp'],
-    python_requires='>=3.6',
-    install_requires=[
-        'pandas',
+    author='OR-KOREN',
+    author_email='orkorn@gmail.com',
+    description='a tool for comparing distributions',
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+    url='https://github.com/orkorn/distcomp',
+    packages=['distcomp'],
+    install_requires=['pandas',
         'numpy',
         'plotly',
         'scipy',
         'seaborn',
         'matplotlib',
         'termcolor',
-        'causalml']
-
-    )
-
+        'causalml'],
+)

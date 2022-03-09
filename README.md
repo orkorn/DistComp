@@ -1,6 +1,6 @@
-# TUTORIAL: How to use distcomp
+# TUTORIAL: How to use DistComp
 
-Author:  OR KOREN <orkorn@gmail.com>
+Author:  OR KOREN <or.koren@shutterfly.com>
 
 ---
 

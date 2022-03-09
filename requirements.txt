@@ -1,8 +1,0 @@
-pandas~=1.2.5
-numpy~=1.19.5
-plotly~=5.6.0
-scipy~=1.4.1
-seaborn
-matplotlib~=1.4.13.4.2
-termcolor
-causalml~=0.12.0

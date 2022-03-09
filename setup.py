@@ -1,7 +1,5 @@
 from setuptools import setup
 
-from comparing_distributions import __version__
-
 setup(
     name='distcomp',
     version='0.1.0',

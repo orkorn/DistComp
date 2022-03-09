@@ -1,4 +1,4 @@
-# TUTORIAL: How to use DistComp
+# TUTORIAL: How to use distcomp
 
 Author:  OR KOREN <orkorn@gmail.com>
 

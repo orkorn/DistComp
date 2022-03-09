@@ -9,7 +9,7 @@ setup(
     url='https://gh.internal.shutterfly.com/or-koren/distcomp',
     author='OR KOREN',
     author_email='or.koren@shutterfly.com',
-    py_modules=['DistComp'],
+    py_modules=['distcomp'],
     python_requires='>=3.6',
     install_requires=[
         'pandas',

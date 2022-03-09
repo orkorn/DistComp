@@ -7,7 +7,7 @@ Author:  OR KOREN <or.koren@shutterfly.com>
 ## Installation
 
 ```bash
-  $ pip install git+ssh://git@gh.internal.shutterfly.com/or-koren/distcomp.git
+pip install git+ssh://git@gh.internal.shutterfly.com/or-koren/distcomp.git
 ```
 
 ### Quick Start

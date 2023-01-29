@@ -48,8 +48,8 @@ cd=comparing_distributions(df,
 
 cd.PlotECDF(figsize=(10,4))
 
-# histnorm accept percent/probability/density/probability density/None
-cd.PlotHist(histnorm='probability density',bins=None)
+# histnorm accept percent/probability/density/probability density/None  ,barmode='overlay'
+cd.PlotHist(histnorm='probability density',bins=None,)
 
 cd.KS_Test(pval=0.1,ks_alternative='two-sided',ks_mode='auto')
 
